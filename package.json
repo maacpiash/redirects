@@ -1,5 +1,6 @@
 {
   "name": "redirects",
+  "license": "MIT",
   "scripts": {
     "dev:cf": "wrangler dev",
     "dev:bun": "bun --bun run --hot src/index.ts",
