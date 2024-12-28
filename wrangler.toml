@@ -7,9 +7,10 @@ compatibility_date = "2024-12-25"
 # [vars]
 # MY_VAR = "my-variable"
 
-# [[kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+[[kv_namespaces]]
+binding = "KV_NS"
+id = "244d6be683ca409ba4da2d1d41f44917"
+preview_id = "6d65e840b31e482896f9f9fc2fdcffa3"
 
 # [[r2_buckets]]
 # binding = "MY_BUCKET"
