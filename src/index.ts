@@ -32,8 +32,9 @@ type Env = {
 const app = new Hono<Env>()
 
 app.get('/:key', async ({ env, req, status, redirect }) => {
+	const key = req.param('key').toLowerCase()
 	try {
-		const url = await env.KV_NS.get(req.param('key'))
+		const url = await env.KV_NS.get(key)
 		if (url === null) return status(404)
 		return redirect(url)
 	} catch (e) {
