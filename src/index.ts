@@ -22,6 +22,16 @@
  * SOFTWARE.
  */
 import { Hono } from 'hono'
+import { z } from 'zod'
+import { zValidator } from '@hono/zod-validator'
+
+const Schema = z.object({
+	key: z
+		.string()
+		.nonempty()
+		.refine(s => !s.includes(' '), 'Spaces are not allowed'),
+	url: z.string().url(),
+})
 
 type Env = {
 	Bindings: {
@@ -40,6 +50,20 @@ app.get('/:key', async ({ env, req, status, redirect }) => {
 	} catch (e) {
 		console.error(e)
 		return status(500)
+	}
+})
+
+app.post('/', zValidator('json', Schema), async ({ env, req, json }) => {
+	const { key, url } = req.valid('json')
+	try {
+		await env.KV_NS.put(key.toLowerCase(), url)
+		return json({ message: 'Saved successfully.' }, 201)
+	} catch (e) {
+		if (e instanceof Error) {
+			if (e.message.includes('429')) return json({ message: e.message }, 429)
+			return json({ message: e.message }, 500)
+		}
+		return json({ message: 'Unknown error occurred!' }, 500)
 	}
 })
 
