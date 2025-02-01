@@ -24,6 +24,7 @@
 import { Hono } from 'hono'
 import type { Env } from './env'
 import { validation } from './validation'
+import { auth } from './auth'
 
 const app = new Hono<Env>()
 
@@ -39,7 +40,7 @@ app.get('/:key', async ({ env, req, status, redirect }) => {
 	}
 })
 
-app.post('/', validation, async ({ env, req, json }) => {
+app.post('/', auth, validation, async ({ env, req, json }) => {
 	const { key, url } = req.valid('json')
 	try {
 		await env.KV_NS.put(key.toLowerCase(), url)

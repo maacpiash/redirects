@@ -21,10 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-export type Env = {
-	Bindings: {
-		KV_NS: KVNamespace
-		AUTH_USERNAME: string
-		AUTH_PASSWORD: string
-	}
-}
+import { Context } from 'hono'
+import { basicAuth } from 'hono/basic-auth'
+import { Env } from './env'
+
+export const auth = basicAuth({
+	verifyUser: (username, password, { env }: Context<Env>) =>
+		username === env.AUTH_USERNAME && password === env.AUTH_PASSWORD,
+})
