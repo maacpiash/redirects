@@ -2,11 +2,9 @@
   "name": "redirects",
   "license": "MIT",
   "scripts": {
-    "dev:cf": "wrangler dev",
-    "dev:bun": "bun --bun run --hot src/index.ts",
+    "dev": "wrangler dev",
     "format": "prettier . --write",
     "lint": "eslint",
-    "kv": "wrangler kv:namespace create piash-redirects-dev --preview",
     "deploy": "wrangler deploy --minify"
   },
   "dependencies": {
