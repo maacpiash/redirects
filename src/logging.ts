@@ -21,11 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-export type Env = {
-	Bindings: {
-		KV_NS: KVNamespace
-		AUTH_USERNAME: string
-		AUTH_PASSWORD: string
-		ANALYTICS: AnalyticsEngineDataset
-	}
+import { Context, Next } from 'hono'
+import { Env } from './env'
+
+const acceptableMethods = ['GET', 'POST']
+
+export const logging = async (context: Context<Env>, next: Next) => {
+	const requestId = context.get('requestId').replaceAll('-', '')
+	if (context.req.path === '/favicon.ico') return await next()
+	if (!acceptableMethods.includes(context.req.method)) return await next()
+	return await next().then(() => {
+		const blobs = [context.req.method, context.req.path]
+		if (context.req.method === 'POST') blobs.push(JSON.stringify(context.req.json()))
+		context.env.ANALYTICS.writeDataPoint({
+			indexes: [requestId],
+			blobs,
+			doubles: [context.res.status],
+		})
+	})
 }

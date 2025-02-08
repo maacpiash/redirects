@@ -22,11 +22,16 @@
  * SOFTWARE.
  */
 import { Hono } from 'hono'
+import { requestId } from 'hono/request-id'
 import type { Env } from './env'
 import { validation } from './validation'
 import { auth } from './auth'
+import { logging } from './logging'
 
 const app = new Hono<Env>()
+
+app.use('*', requestId())
+app.use('*', logging)
 
 app.get('/:key', async ({ env, req, status, redirect }) => {
 	const key = req.param('key').toLowerCase()
