@@ -5,7 +5,7 @@ Redirect from a shortened URL to the actual destination URL.
 ## Features
 
 - [x] Redirect URL by KV look up
-- [ ] Add or update URLs via basic/JWT auth
+- [x] Add or update URLs via basic/JWT auth
 
 ## Architecture
 
@@ -21,6 +21,13 @@ npx wrangler kv:namespace create KV_NS-dev --preview # dev, use with `preview_id
 ```
 
 Then, copy the values from the terminal and paste them in the `kv_namespaces` section in `wrangler.toml` file. Finally, run `bun run dev:cf`.
+
+For user auth, set the `AUTH_USERNAME` AND `AUTH_PASSWORD` with the following commands:
+
+```bash
+npx wrangler secret put AUTH_USERNAME
+npx wrangler secret put AUTH_PASSWORD
+```
 
 ## Deploy
 
