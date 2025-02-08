@@ -33,6 +33,7 @@ export const logging = async (context: Context<Env>, next: Next) => {
 	return await next().then(() => {
 		const blobs = [context.req.method, context.req.path]
 		if (context.req.method === 'POST') blobs.push(JSON.stringify(context.req.json()))
+		if (context.res.status == 500) blobs.push(JSON.stringify(context.res.json()))
 		context.env.ANALYTICS.writeDataPoint({
 			indexes: [requestId],
 			blobs,

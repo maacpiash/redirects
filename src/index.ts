@@ -33,15 +33,15 @@ const app = new Hono<Env>()
 app.use('*', requestId())
 app.use('*', logging)
 
-app.get('/:key', async ({ env, req, status, redirect }) => {
+app.get('/:key', async ({ env, req, json, redirect }) => {
 	const key = req.param('key').toLowerCase()
 	try {
 		const url = await env.KV_NS.get(key)
-		if (url === null) return status(404)
+		if (!url) return json({ error: 'Not Found' }, 404)
 		return redirect(url)
 	} catch (e) {
-		console.error(e)
-		return status(500)
+		if (e instanceof Error) return json({ error: e.name, details: e.message }, 500)
+		return json({ error: 'Unknown error occurred', details: String(e) }, 500)
 	}
 })
 
