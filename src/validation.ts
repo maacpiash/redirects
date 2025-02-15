@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 import { z } from 'zod'
+import { createMiddleware } from 'hono/factory'
 import { zValidator } from '@hono/zod-validator'
 
 const Schema = z.object({
@@ -32,4 +33,4 @@ const Schema = z.object({
 	url: z.string().url(),
 })
 
-export const validation = zValidator('json', Schema)
+export const validation = () => createMiddleware(zValidator('json', Schema))

@@ -31,7 +31,7 @@ import { logging } from './logging'
 const app = new Hono<Env>()
 
 app.use('*', requestId())
-app.use('*', logging)
+app.use('*', logging())
 
 app.get('/:key', async ({ env, req, json, redirect }) => {
 	const key = req.param('key').toLowerCase()
@@ -45,7 +45,7 @@ app.get('/:key', async ({ env, req, json, redirect }) => {
 	}
 })
 
-app.post('/', auth, validation, async ({ env, req, json }) => {
+app.post('/', auth(), validation(), async ({ env, req, json }) => {
 	const { key, url } = req.valid('json')
 	try {
 		await env.KV_NS.put(key.toLowerCase(), url)

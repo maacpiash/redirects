@@ -22,21 +22,24 @@
  * SOFTWARE.
  */
 import { Context, Next } from 'hono'
+import { createMiddleware } from 'hono/factory'
 import { Env } from './env'
 
 const acceptableMethods = ['GET', 'POST']
 
-export const logging = async (context: Context<Env>, next: Next) => {
-	const requestId = context.get('requestId').replaceAll('-', '')
-	if (context.req.path === '/favicon.ico') return await next()
-	if (!acceptableMethods.includes(context.req.method)) return await next()
-	return await next().then(() => {
-		const blobs = [context.req.method, context.req.path]
-		if (context.req.method === 'POST' || context.res.status === 500) blobs.push(JSON.stringify(context.req.json()))
-		context.env.ANALYTICS.writeDataPoint({
-			indexes: [requestId],
-			blobs,
-			doubles: [context.res.status],
+export const logging = () =>
+	createMiddleware(async (context: Context<Env>, next: Next) => {
+		const requestId = context.get('requestId').replaceAll('-', '')
+		if (context.req.path === '/favicon.ico') return await next()
+		if (!acceptableMethods.includes(context.req.method)) return await next()
+		return await next().then(() => {
+			const blobs = [context.req.method, context.req.path]
+			if (context.req.method === 'POST' || context.res.status === 500)
+				blobs.push(JSON.stringify(context.req.json()))
+			context.env.ANALYTICS.writeDataPoint({
+				indexes: [requestId],
+				blobs,
+				doubles: [context.res.status],
+			})
 		})
 	})
-}

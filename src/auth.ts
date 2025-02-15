@@ -22,10 +22,14 @@
  * SOFTWARE.
  */
 import { Context } from 'hono'
+import { createMiddleware } from 'hono/factory'
 import { basicAuth } from 'hono/basic-auth'
 import { Env } from './env'
 
-export const auth = basicAuth({
-	verifyUser: (username, password, { env }: Context<Env>) =>
-		username === env.AUTH_USERNAME && password === env.AUTH_PASSWORD,
-})
+export const auth = () =>
+	createMiddleware(
+		basicAuth({
+			verifyUser: (username, password, { env }: Context<Env>) =>
+				username === env.AUTH_USERNAME && password === env.AUTH_PASSWORD,
+		})
+	)
