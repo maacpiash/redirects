@@ -24,9 +24,7 @@
 import { Hono } from 'hono'
 import { requestId } from 'hono/request-id'
 import type { Env } from './env'
-import { validation } from './validation'
-import { auth } from './auth'
-import { logging } from './logging'
+import { auth, logging, validation } from './middleware'
 
 const app = new Hono<Env>()
 

@@ -24,7 +24,7 @@
 import { Context } from 'hono'
 import { createMiddleware } from 'hono/factory'
 import { basicAuth } from 'hono/basic-auth'
-import { Env } from './env'
+import { Env } from '../env'
 
 export const auth = () =>
 	createMiddleware(

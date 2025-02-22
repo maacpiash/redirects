@@ -23,7 +23,7 @@
  */
 import { Context, Next } from 'hono'
 import { createMiddleware } from 'hono/factory'
-import { Env } from './env'
+import { Env } from '../env'
 
 const acceptableMethods = ['GET', 'POST']
 
