@@ -12,6 +12,7 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - name: Build and Deploy Worker on Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
