@@ -1,4 +1,4 @@
-# Redirects
+# Redirects • [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/maacpiash/redirects/deploy.yaml?style=flat-square&logo=github&label=deploy)](https://github.com/maacpiash/redirects/actions/workflows/deploy.yaml) [![Deployed on Cloudflare Workers](https://img.shields.io/badge/platform-Workers-F38020?style=flat-square&logo=cloudflare)](https://pia.sh) ![Status: in progress](https://img.shields.io/badge/status-in%20progress-green?logo=git&style=flat-square) ![PRs welcome](https://img.shields.io/badge/PRs-Welcome-3DA639?style=flat-square&logo=opensourceinitiative)
 
 Redirect from a shortened URL to the actual destination URL.
 
