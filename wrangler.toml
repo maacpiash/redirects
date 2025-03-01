@@ -1,6 +1,7 @@
 name = "redirects"
 main = "src/index.ts"
 compatibility_date = "2024-12-25"
+assets = { directory = "public" }
 
 # compatibility_flags = [ "nodejs_compat" ]
 
