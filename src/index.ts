@@ -31,6 +31,9 @@ const app = new Hono<Env>()
 app.use('*', requestId())
 app.use('*', logging())
 
+app.get('/', ({ redirect }) => redirect('https://www.ahadchowdhury.com', 301))
+app.get('/gh/:repo', ({ req, redirect }) => redirect(`https://github.com/maacpiash/${req.param('repo')}`, 301))
+
 app.get('/:key', async ({ env, req, json, redirect }) => {
 	const key = req.param('key').toLowerCase()
 	try {
